@@ -6,3 +6,4 @@ pandas~=1.3.5
 urlextract~=1.6.0
 wordcloud~=1.8.1
 emojis~=0.6.0
+nltk~=3.7
