@@ -5,7 +5,7 @@ import pandas as pd
 from urlextract import URLExtract
 from wordcloud import WordCloud
 from collections import Counter
-
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 extract = URLExtract()
 
 
@@ -115,3 +115,17 @@ def month_activity_map(selected_user,df):
         df = df[df['user'] == selected_user]
 
     return df['month'].value_counts()
+
+def sentiment(selected_user,df):
+    if selected_user != 'Overall':
+        df = df[df['user'] == selected_user]
+
+    data = df.dropna()
+    sentiments = SentimentIntensityAnalyzer()
+    data["Positive"] = [sentiments.polarity_scores(i)["pos"]for i in data['message']]
+    data["Negative"] = [sentiments.polarity_scores(i)["neg"] for i in data['message']]
+    data["Neutral"] = [sentiments.polarity_scores(i)["neu"] for i in data['message']]
+    # new_data = pd.DataFrame({'Name':['Positive','Negative','Neutral'],
+    #                          'Scroe':[{data['Positive'].sum()},{data['Negative'].sum()},{data['Neutral'].sum()}]})
+
+    return data

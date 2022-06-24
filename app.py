@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 import preprocessor
 import support
@@ -112,3 +113,31 @@ if uploaded_file is not None:
                          title='Emoji percentage used in chat group')
             fig.update_traces(textposition='inside', textinfo='percent+label')
             st.plotly_chart(fig)
+
+        #sentiment
+        st.title("Sentiment Analysis")
+        senti_df = support.sentiment(selected_user,df)
+        st.dataframe(senti_df)
+        last_3 = senti_df.iloc[:,-3:]
+        # st.dataframe(last_3)
+        new_data = pd.DataFrame({'Name': ['Positive', 'Negative', 'Neutral'],
+                                 'Scroe': [last_3['Positive'].sum(), last_3['Negative'].sum(),
+                                           last_3['Neutral'].sum()]})
+        st.dataframe(new_data)
+        # fig,ax =new_data.plot.bar(x='Name',y='Scroe',rot=0)
+        # st.plotly_chart(fig)
+        fig = px.pie(new_data, values='Scroe', names='Name',title='Pie Chart for sentimental Analysis')
+        fig.update_traces(textposition= 'outside',textinfo='percent+label',textfont_size=14)
+        st.plotly_chart(fig)
+        # value = senti_df["Positive"].sum()
+        # st.text(value)
+        #
+        # last_3 = senti_df.iloc[:,-3:]
+        # # st.dataframe(last_3)
+        # new_df = pd.DataFrame({'type': last_3, 'score':last_3.sum()})
+        # st.dataframe(new_df)
+        # for data in last_3:
+
+        # ax.bar(x.index, x.values)
+        # plt.xticks(rotation='vertical')
+        # st.pyplot(fig)
