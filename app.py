@@ -7,8 +7,8 @@ import support
 import matplotlib.pyplot as plt
 import plotly.express as px
 import mplcyberpunk
-import googletrans
-from googletrans import Translator
+# import googletrans
+# from googletrans import Translator
 
 
 st.sidebar.title("Import Chat ")
